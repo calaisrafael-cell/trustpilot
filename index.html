@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trustpilot Hotmart — Análise CX Ops</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0e0f11;
+    --surface: #16181d;
+    --surface2: #1e2128;
+    --border: #2a2d36;
+    --accent: #e84855;
+    --accent2: #f7b731;
+    --accent3: #3ecf8e;
+    --accent4: #5b8dee;
+    --text: #e8eaf0;
+    --text-muted: #8b8fa8;
+    --text-dim: #565a72;
+    --red: #e84855;
+    --orange: #f7953b;
+    --yellow: #f7b731;
+    --green: #3ecf8e;
+    --blue: #5b8dee;
+    --purple: #9b59b6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 40px 24px; position: relative; z-index: 1; }
+
+  .header { border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .header-meta .tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: rgba(232,72,85,0.12); border: 1px solid rgba(232,72,85,0.25); padding: 4px 10px; border-radius: 4px; }
+  .header-meta .date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 46px); font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 12px; }
+  .header h1 em { color: var(--accent); font-style: italic; }
+  .header .subtitle { color: var(--text-muted); font-size: 14px; max-width: 600px; line-height: 1.7; }
+
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .alert-banner { background: rgba(232,72,85,0.08); border: 1px solid rgba(232,72,85,0.3); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin-bottom: 40px; display: flex; gap: 14px; align-items: flex-start; }
+  .alert-banner .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-banner strong { color: var(--accent); }
+  .alert-banner p { color: var(--text-muted); font-size: 13px; margin-top: 4px; line-height: 1.6; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 40px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px 18px; position: relative; overflow: hidden; transition: border-color 0.2s; }
+  .stat-card:hover { border-color: var(--text-dim); }
+  .stat-card .stat-label { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 8px; text-transform: uppercase; }
+  .stat-card .stat-value { font-family: 'DM Serif Display', serif; font-size: 32px; line-height: 1; margin-bottom: 4px; }
+  .stat-card .stat-sub { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .stat-card.red .stat-value { color: var(--red); }
+  .stat-card.yellow .stat-value { color: var(--yellow); }
+  .stat-card.green .stat-value { color: var(--green); }
+  .stat-card.blue .stat-value { color: var(--blue); }
+  .stat-card.orange .stat-value { color: var(--orange); }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .stat-card.red::before { background: var(--red); }
+  .stat-card.yellow::before { background: var(--yellow); }
+  .stat-card.green::before { background: var(--green); }
+  .stat-card.blue::before { background: var(--blue); }
+  .stat-card.orange::before { background: var(--orange); }
+
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  .charts-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 768px) { .charts-grid, .charts-grid.three { grid-template-columns: 1fr; } }
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .chart-desc { font-size: 11px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.5; }
+  .chart-container { position: relative; }
+
+  .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  @media (max-width: 768px) { .insights-grid { grid-template-columns: 1fr; } }
+  .insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+  .insight-card.full { grid-column: 1 / -1; }
+  .insight-number { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; margin-bottom: 8px; }
+  .insight-number.red { color: var(--red); }
+  .insight-number.yellow { color: var(--yellow); }
+  .insight-number.orange { color: var(--orange); }
+  .insight-number.blue { color: var(--blue); }
+  .insight-number.green { color: var(--green); }
+  .insight-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+  .insight-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .insight-card .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-family: 'DM Mono', monospace; }
+  .tag.red { background: rgba(232,72,85,0.12); color: var(--red); border: 1px solid rgba(232,72,85,0.25); }
+  .tag.yellow { background: rgba(247,183,49,0.12); color: var(--yellow); border: 1px solid rgba(247,183,49,0.25); }
+  .tag.green { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.25); }
+  .tag.blue { background: rgba(91,141,238,0.12); color: var(--blue); border: 1px solid rgba(91,141,238,0.25); }
+  .tag.gray { background: rgba(139,143,168,0.1); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .fraud-section { background: var(--surface); border: 1px solid rgba(232,72,85,0.25); border-radius: 8px; padding: 24px; margin-bottom: 40px; }
+  .fraud-pattern { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; margin-bottom: 10px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; }
+  .fraud-pattern:last-child { margin-bottom: 0; }
+  .fraud-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .fraud-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .fraud-count { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--red); white-space: nowrap; text-align: right; }
+  .fraud-count span { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); display: block; }
+
+  .quotes-section { margin-bottom: 40px; }
+  .quote-tabs { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+  .quote-tab { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 14px; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .quote-tab:hover, .quote-tab.active { background: var(--surface2); border-color: var(--accent); color: var(--text); }
+  .quote-panel { display: none; }
+  .quote-panel.active { display: block; }
+  .quote-item { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 10px; font-size: 13px; color: var(--text-muted); line-height: 1.7; font-style: italic; }
+  .quote-item:last-child { margin-bottom: 0; }
+
+  .recs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  @media (max-width: 768px) { .recs-grid { grid-template-columns: 1fr; } }
+  .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+  .rec-priority { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; display: inline-block; padding: 3px 8px; border-radius: 4px; }
+  .rec-priority.p1 { background: rgba(232,72,85,0.12); color: var(--red); border: 1px solid rgba(232,72,85,0.25); }
+  .rec-priority.p2 { background: rgba(247,183,49,0.12); color: var(--yellow); border: 1px solid rgba(247,183,49,0.25); }
+  .rec-priority.p3 { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.25); }
+  .rec-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .rec-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .rec-owner { margin-top: 12px; font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 6px; }
+
+  .footnote { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeUp 0.4s ease both; }
+  .fade-in:nth-child(2) { animation-delay: 0.05s; }
+  .fade-in:nth-child(3) { animation-delay: 0.1s; }
+  .fade-in:nth-child(4) { animation-delay: 0.15s; }
+  .fade-in:nth-child(5) { animation-delay: 0.2s; }
+  .fade-in:nth-child(6) { animation-delay: 0.25s; }
+
+  .update-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 12px; flex-wrap: wrap; }
+  .update-bar .section-label { margin-bottom: 0; flex: 1; }
+  .update-bar .section-label::after { display: none; }
+  .update-bar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  #lastUpdatedLabel { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 0.06em; }
+  #btnAtualizar { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 14px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; letter-spacing: 0.06em; }
+  #btnAtualizar:hover:not(:disabled) { border-color: var(--accent); color: var(--text); background: var(--surface2); }
+  #btnAtualizar:disabled { opacity: 0.5; cursor: not-allowed; }
+  #btnAtualizar .spinner { display: none; width: 10px; height: 10px; border: 1.5px solid var(--text-dim); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  #btnAtualizar.loading .spinner { display: inline-block; }
+  #btnAtualizar.loading .btn-icon { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .update-bar::after { content: ''; display: block; width: 100%; height: 1px; background: var(--border); order: 99; margin-top: -8px; }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="wrap">
+
+  <div class="header fade-in">
+    <div class="header-meta">
+      <span class="tag">CX Ops · Internal</span>
+      <span class="date">Análise gerada em Abril 2026</span>
+    </div>
+    <h1>Trustpilot Hotmart<br><em>Análise de Avaliações Críticas</em></h1>
+    <p class="subtitle">Diagnóstico de <span id="headerTotal">—</span> avaliações coletadas e categorizadas pelo time de analistas. Foco em identificação de padrões de fraude, motivos de insatisfação, perfis de reclamantes e recomendações acionáveis.</p>
+  </div>
+
+  <div class="alert-banner fade-in">
+    <span class="icon">📌</span>
+    <div>
+      <strong>Contexto importante: aumento de volume em março/abril 2026</strong>
+      <p>O salto de ~40 avaliações/mês para 254 em março e 243 em abril é resultado direto da <strong>ativação do plano pago do Trustpilot</strong> com envios proativos de convites de avaliação — não de um pico espontâneo de insatisfação. Isso significa que os dados de março/abril são mais representativos da base real de clientes do que os meses anteriores, onde só avaliava quem buscava ativamente. Os padrões de fraude identificados (camisa Bayern, funil de assinaturas) existiam antes — passaram a aparecer com mais volume porque mais usuários foram ativados para avaliar.</p>
+    </div>
+  </div>
+
+  <div class="update-bar">
+    <div class="section-label">Visão geral · <span id="totalLabel">—</span> avaliações</div>
+    <div class="update-bar-right">
+      <span id="lastUpdatedLabel"></span>
+      <button id="btnAtualizar" onclick="fetchFromSheetDB()" title="Buscar dados atualizados do Google Sheets">
+        <span class="btn-icon">↻</span>
+        <span class="spinner"></span>
+        Atualizar
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-grid fade-in">
+    <div class="stat-card red"><div class="stat-label">Taxa negativa</div><div class="stat-value" id="kpiTaxaNeg">—</div><div class="stat-sub" id="kpiTaxaNegSub">—</div></div>
+    <div class="stat-card red"><div class="stat-label">Avaliações 1 estrela</div><div class="stat-value" id="kpiUmaEstrela">—</div><div class="stat-sub" id="kpiUmaEsRelaSub">—</div></div>
+    <div class="stat-card orange"><div class="stat-label">Produto Reprovado</div><div class="stat-value" id="kpiProdRep">—</div><div class="stat-sub">em reviews negativas</div></div>
+    <div class="stat-card yellow"><div class="stat-label">Produtores Bloqueados</div><div class="stat-value" id="kpiBloqueados">—</div><div class="stat-sub">em reviews negativas</div></div>
+    <div class="stat-card blue"><div class="stat-label">Reavaliaram</div><div class="stat-value" id="kpiReavaliaram">—</div><div class="stat-sub" id="kpiReavaliaramSub">—</div></div>
+    <div class="stat-card green"><div class="stat-label">Avaliações positivas</div><div class="stat-value" id="kpiPositivas">—</div><div class="stat-sub">4★ e 5★</div></div>
+  </div>
+
+  <div class="section-label">Tendência mensal</div>
+  <div class="chart-card full fade-in" style="margin-bottom:40px">
+    <div class="chart-title">Volume de avaliações por mês e nota</div>
+    <div class="chart-desc">O aumento em março/abril 2026 reflete a ativação do plano pago do Trustpilot com envios proativos de convite — não uma crise espontânea. Os meses anteriores eram subrepresentados por viés de seleção (só avaliava quem buscava ativamente). Março/abril representam uma amostra mais próxima da realidade da base de clientes.</div>
+    <div class="chart-container" style="height:280px"><canvas id="monthlyChart"></canvas></div>
+  </div>
+
+  <div class="section-label">Motivos de contato · avaliações negativas</div>
+  <div class="charts-grid fade-in">
+    <div class="chart-card"><div class="chart-title">Top motivos — geral (neg.)</div><div class="chart-desc">Reembolso domina com folga. "Suporte Hotmart" representa insatisfação com o atendimento em si.</div><div class="chart-container" style="height:320px"><canvas id="motivosChart"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">Distribuição por idioma (neg.)</div><div class="chart-desc" id="idiomaDesc">—</div><div class="chart-container" style="height:320px"><canvas id="idiomaChart"></canvas></div></div>
+  </div>
+
+  <div class="section-label">O que os dados permitem dizer sobre o perfil do reclamante</div>
+  <div class="insights-grid fade-in">
+    <div class="insight-card full">
+      <div style="background:rgba(247,183,49,0.07);border:1px solid rgba(247,183,49,0.2);border-radius:6px;padding:14px 16px;margin-bottom:20px;font-size:12px;color:var(--text-muted);line-height:1.7"><strong style="color:var(--yellow)">Nota metodológica:</strong> A base não contém um campo explícito de Buyer vs Creator por reclamante. A coluna "Status Produtor" indica restrições na conta do produtor — não o perfil de quem avaliou. Classificar perfil com base apenas nessa coluna geraria inferências incorretas. O que é possível fazer com segurança é olhar para o <strong style="color:var(--text)">tipo de reclamação</strong> como proxy indireto de perfil.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:rgba(62,207,142,0.08);border:1px solid rgba(62,207,142,0.2);border-radius:6px;padding:16px"><div id="profileBuyer" style="font-family:'DM Serif Display',serif;font-size:36px;color:var(--green);margin-bottom:4px">—</div><div style="font-size:12px;font-weight:600;margin-bottom:6px">🛒 Sinal forte de Buyer</div><div style="font-size:11px;color:var(--text-muted);line-height:1.6">Motivos: Reembolso, Cobrança não reconhecida, Conteúdo do produto, Compra não localizada.</div></div>
+        <div style="background:rgba(232,72,85,0.08);border:1px solid rgba(232,72,85,0.2);border-radius:6px;padding:16px"><div id="profileCreator" style="font-family:'DM Serif Display',serif;font-size:36px;color:var(--red);margin-bottom:4px">—</div><div style="font-size:12px;font-weight:600;margin-bottom:6px">🎬 Sinal forte de Creator</div><div style="font-size:11px;color:var(--text-muted);line-height:1.6">Motivos: Saques e comissões, Programa de afiliados, Suporte Produtor, Cartão Hotmart, Atribuição de comissão, Ferramentas, Página de vendas.</div></div>
+        <div style="background:rgba(139,143,168,0.07);border:1px solid var(--border);border-radius:6px;padding:16px"><div id="profileAmbig" style="font-family:'DM Serif Display',serif;font-size:36px;color:var(--text-muted);margin-bottom:4px">—</div><div style="font-size:12px;font-weight:600;margin-bottom:6px">⚪ Ambíguo</div><div style="font-size:11px;color:var(--text-muted);line-height:1.6">Motivos: Suporte Hotmart, Acesso, Bloqueio, Documentação, Assinatura, Pagamento, Conta...</div></div>
+      </div>
+      <p id="profileDesc" style="font-size:13px;color:var(--text-muted);line-height:1.7">—</p>
+    </div>
+  </div>
+
+  <div class="section-label">Produtores bloqueados em reviews negativas</div>
+  <div class="charts-grid fade-in">
+    <div class="chart-card"><div class="chart-title">Tipos de bloqueio</div><div class="chart-desc" id="bloqueioDesc">—</div><div class="chart-container" style="height:280px"><canvas id="bloqueioChart"></canvas></div></div>
+    <div class="insight-card">
+      <div class="insight-number red" id="kpiBloqueadosInsight">—</div>
+      <h3>Reviews de produtores com bloqueio</h3>
+      <p id="bloqueioInsightText">—</p>
+      <div class="tag-row" id="bloqueioTags">—</div>
+      <p id="bloqueioSoWhat" style="margin-top:12px;font-size:13px;color:var(--text-muted)"><strong style="color:var(--yellow)">So what:</strong> Isso sugere que a detecção e bloqueio de produtores problemáticos pode estar ocorrendo <em>depois</em> que o dano reputacional já aconteceu — não antes.</p>
+    </div>
+  </div>
+
+  <div class="section-label">Padrões de fraude e golpe identificados</div>
+  <div class="fraud-section fade-in">
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.7">Os analistas mapearam padrões recorrentes nas avaliações que indicam uso indevido da plataforma por terceiros ou práticas abusivas de produtores. Abaixo os principais clusters identificados:</p>
+    <div class="fraud-pattern"><div><div class="fraud-name">🏆 Golpe da Camisa do Bayern München</div><div class="fraud-desc">Usuários alemães relatam ter participado de um "sorteio" de uma camisa do Bayern via Facebook/PayPal. Pagam apenas "frete" (~€7) e são cobrados automaticamente em €60-70 adicionais. Produto vinculado: IDs 7446199, 7446280.</div></div><div class="fraud-count">13<span>reviews</span></div></div>
+    <div class="fraud-pattern"><div><div class="fraud-name">💸 Funil de venda com assinaturas semanais não autorizadas</div><div class="fraud-desc">Usuários (principalmente hispanófonos) relatam ter tentado comprar um produto barato (~$10-38) e terem sido cobrados automaticamente por múltiplos produtos adicionais. O botão "Não quero" era ignorado pelo sistema.</div></div><div class="fraud-count">9<span>padrão</span></div></div>
+    <div class="fraud-pattern"><div><div class="fraud-name">🎭 Golpe do Dwayne Johnson (The Rock) / YouTube</div><div class="fraud-desc">Anúncio falso com deepfake do The Rock prometendo pagamento por avaliação de anúncios no YouTube. Usuários pagam entre $24-$47 para "entrar na plataforma" e são cobrados em múltiplas transações subsequentes.</div></div><div class="fraud-count">4<span>reviews</span></div></div>
+    <div class="fraud-pattern"><div><div class="fraud-name">📦 Golpe das Caixas Surpresa da Amazon</div><div class="fraud-desc">Usuários alemães relatam ter comprado uma "surpresa Amazon" por ~€10-14 e não terem recebido nada. Produtos: IDs 6072916, 6438431.</div></div><div class="fraud-count">4<span>reviews</span></div></div>
+    <div class="fraud-pattern"><div><div class="fraud-name">🔬 Golpe de responder pesquisas / Amazon surveys</div><div class="fraud-desc">Usuários pagam para entrar em sistema de "responder pesquisas da Amazon" com promessa de ganho. Após pagamento, perdem acesso ou não recebem nada.</div></div><div class="fraud-count">3<span>reviews</span></div></div>
+    <div class="fraud-pattern"><div><div class="fraud-name">🌀 Cobranças não reconhecidas / fraude de cartão via PayPal</div><div class="fraud-desc">Usuários europeus (alemão, francês, holandês) relatam cobranças de €1.000+ sem qualquer contato com a plataforma. Possível comprometimento de dados de cartão por terceiros usando Hotmart como gateway.</div></div><div class="fraud-count" id="fraudeCobrancaCount">—<span>reviews</span></div></div>
+  </div>
+
+  <div class="section-label">Reavaliação e recuperação de nota</div>
+  <div class="insights-grid fade-in">
+    <div class="insight-card"><div class="insight-number yellow" id="kpiReavaliaramInsight">—</div><h3>Reviews com alguma movimentação pós-publicação</h3><p id="reavaliaramText">—</p><div class="tag-row" id="reavaliaramTags">—</div></div>
+    <div class="insight-card"><div class="insight-number red" id="kpiReversaoTaxa">—</div><h3>Taxa de reversão bem-sucedida</h3><p id="reversaoText">—</p><p style="margin-top:10px;font-size:12px;color:var(--text-dim)">Benchmark: plataformas com processo ativo de recovery conseguem 15-25% de reversão em reviews críticas.</p></div>
+  </div>
+
+  <div class="section-label">Voz do cliente · exemplos por categoria</div>
+  <div class="quotes-section fade-in">
+    <div class="quote-tabs">
+      <div class="quote-tab active" onclick="showTab('reembolso')">Reembolso</div>
+      <div class="quote-tab" onclick="showTab('cobranca')">Cobrança não reconhecida</div>
+      <div class="quote-tab" onclick="showTab('acesso')">Acesso</div>
+      <div class="quote-tab" onclick="showTab('assinatura')">Assinatura</div>
+      <div class="quote-tab" onclick="showTab('bloqueio')">Bloqueio</div>
+    </div>
+    <div class="quote-panel active" id="tab-reembolso">
+      <div class="quote-item">"I purchased the course on September 14, 2025. Since then, I have never been able to access the course. (…) They keep closing tickets claiming the issue has been resolved — which is not true." — Buyer, EN, 1★</div>
+      <div class="quote-item">"Me han estafado y se han reído de mi al derecho y al revés. He comprado un libro que no tiene nada que ver con el archivo que me llego. Lo he comunicado mediante correos — me contestaban con monosílabos." — Buyer, ES, 1★</div>
+      <div class="quote-item">"Buen dia, son unos estafadores. La semana pasada solo les autoricé algo de 38.000 pesos colombianos e inmediatamente me llegaron descuentos de una cantidad de productos 'espirituales' que nunca autoricé." — Creator, ES, 1★</div>
+    </div>
+    <div class="quote-panel" id="tab-cobranca">
+      <div class="quote-item">"Ich habe lediglich bei einem Gewinnspiel mitgemacht, es wurden jedoch automatisch noch weitere Summen abgebucht (per PayPal) die ich nie gekauft habe. Das ist Betrug." — DE, 1★ [Camisa Bayern]</div>
+      <div class="quote-item">"À ma grande surprise je reçois un mail de ma banque me disant qu'un prélèvement va être fait demain de 899€ alors que je ne connais même pas le créancier." — FR, 1★</div>
+      <div class="quote-item">"Hotmart B.V. ist eine Betrugsfirma mit Sitz in den Nederlanden. Mir wurden mehrfach EURO-Beträge abgebucht." — DE, 1★</div>
+    </div>
+    <div class="quote-panel" id="tab-acesso">
+      <div class="quote-item">"Como consumidora, la verificación en dos pasos impide que entres a tu cuenta. Entras tus datos, dicen enviarte un código al correo. El correo nunca llega y cuando lo hace el código ha expirado." — ES, 1★</div>
+      <div class="quote-item">"Il sistema non rispondeva alle mie richieste. Non è semplice accedere alle richieste di rimborso o trovare dove sia la mail del servizio clienti, ci vuole tantissima pazienza." — IT, 1★</div>
+      <div class="quote-item">"Fraude, arnaque — Hotmart donne 1 code inexploitable mais le débit a bien été fait. Fuyez, grosse arnaque. Aucun suivi." — FR, 1★</div>
+    </div>
+    <div class="quote-panel" id="tab-assinatura">
+      <div class="quote-item">"Compré un producto que se podía pagar en 4 cuotas. Paypal me dice que está todo correcto y que no están recibiendo ninguna comunicación de Hotmart. Me han quitado el acceso a la compra." — ES, 1★</div>
+      <div class="quote-item">"Ojo con Hotmart. Me cobraron una suscripción que no realicé por meses y me plantean como solución la cancelación a la suscripción para los futuros meses pero ninguna solución sobre lo que me cobraron anteriormente." — ES, 1★</div>
+      <div class="quote-item">"Quise contratar un servicio por una vidente (…) comenzaron a sugerirme cursos adicionales a los cuales indiqué: NO QUIERO, GRACIAS! Sin embargo, me los descontaron de todos modos." — ES, 1★</div>
+    </div>
+    <div class="quote-panel" id="tab-bloqueio">
+      <div class="quote-item">"Dopo più di 180 giorni dall'ultima transazione, Hotmart continua a trattenere il mio saldo senza fornire alcuna prova di violazione o frode." — Creator, IT, 1★</div>
+      <div class="quote-item">"I wish I could give 0 stars. My account was charged $37, $67, and $47 back to back. Then they send an email saying that my card was declined and membership canceled." — EN, 1★</div>
+    </div>
+  </div>
+
+  <div class="section-label">Recomendações acionáveis</div>
+  <div class="recs-grid fade-in">
+    <div class="rec-card"><span class="rec-priority p1">P1 · Urgente</span><h3>🔴 Takedown dos produtos de golpe ativos</h3><p>Os produtos IDs 7446199, 7446280 (camisa Bayern), 6438431 e 6072916 (caixas Amazon) e os vinculados ao funil de venda espanhol estão gerando reclamações em escala. Ação imediata de Content Ops e Fraud Prevention.</p><div class="rec-owner">→ Content Ops · Fraud Prevention</div></div>
+    <div class="rec-card"><span class="rec-priority p1">P1 · Urgente</span><h3>🔴 Investigar cobranças europeias não reconhecidas</h3><p>Reviews de usuários europeus (DE, FR, NL, IT) relatam cobranças de €100-1.100 sem qualquer produto ou conta Hotmart. Risco regulatório alto (GDPR, PSD2).</p><div class="rec-owner">→ Fraud Prevention · Finops · Jurídico</div></div>
+    <div class="rec-card"><span class="rec-priority p1">P1 · Estrutural</span><h3>🔴 Revisar política de funil de venda e upsell forçado</h3><p>O padrão de "assinaturas semanais não autorizadas" indica falha de produto: o botão de recusa não está funcionando ou o funil bypassa o consentimento explícito.</p><div class="rec-owner">→ Produto · Trust & Safety</div></div>
+    <div class="rec-card"><span class="rec-priority p2">P2 · Médio prazo</span><h3>🟡 Criar processo sistemático de recovery no Trustpilot</h3><p>Apenas 6 reviews converteram para 5★. Há oportunidade de montar um fluxo de acompanhamento proativo. Plataformas maduras atingem 15-25% de conversão.</p><div class="rec-owner">→ CX Ops · Atendimento</div></div>
+    <div class="rec-card"><span class="rec-priority p2">P2 · Médio prazo</span><h3>🟡 Melhorar self-service de reembolso e cancelamento de assinatura</h3><p>Reembolso é o motivo #1 das negativas. Múltiplos clientes relatam não conseguir completar o processo sem atendimento humano.</p><div class="rec-owner">→ Produto · Help Center</div></div>
+    <div class="rec-card"><span class="rec-priority p2">P2 · Médio prazo</span><h3>🟡 Melhorar verificação em dois fatores</h3><p>Reclamações de 2FA com código que nunca chega ou expira são frequentes em espanhol. Revisão do fluxo com fallback funcional.</p><div class="rec-owner">→ Produto · Segurança</div></div>
+    <div class="rec-card"><span class="rec-priority p3">P3 · Monitoramento</span><h3>🟢 Monitor de padrões de fraude por idioma</h3><p>O cluster de alemão em março/abril 2026 deveria ter sido detectado em semanas, não meses. Criar alerta automatizado de clustering por idioma + produto + motivo.</p><div class="rec-owner">→ CX Ops · Data</div></div>
+    <div class="rec-card"><span class="rec-priority p3">P3 · Produto</span><h3>🟢 Investigar produtos aprovados com alto volume de reembolso</h3><p>Reviews negativas de reembolso têm Status Produto = "Aprovado". Avaliar threshold de taxa de reembolso como critério complementar de monitoramento.</p><div class="rec-owner">→ Trust & Safety · Produto</div></div>
+  </div>
+
+  <div class="footnote">
+    <span>Hotmart · CX Operations · Análise interna</span>
+    <span id="footerBase">Base: — avaliações · Trustpilot · Jan/2025–Abr/2026</span>
+    <span>Categorização: time de analistas CX</span>
+  </div>
+
+</div>
+
+<script>
+const SHEETDB_URL = 'https://sheetdb.io/api/v1/SEU_ID_AQUI';
+const SHEET_NAME  = 'Trustpilot';
+
+let chartMonthly = null, chartMotivos = null, chartIdioma = null, chartBloqueio = null;
+
+const MONTHS_PT  = {1:'Jan',2:'Fev',3:'Mar',4:'Abr',5:'Mai',6:'Jun',7:'Jul',8:'Ago',9:'Set',10:'Out',11:'Nov',12:'Dez'};
+const MONTHS_ORD = {Jan:1,Fev:2,Mar:3,Abr:4,Mai:5,Jun:6,Jul:7,Ago:8,Set:9,Out:10,Nov:11,Dez:12};
+const BUYER_MOTIVOS   = new Set(['Reembolso','Cobrança não reconhecida','Conteúdo do produto','Compra não localizada']);
+const CREATOR_MOTIVOS = new Set(['Saques e comissões','Saques/Comissão','Saques/Com.','Programa de afiliados','Suporte Produtor','Cartão Hotmart','Atribuição de comissão','Ferramentas','Página de vendas']);
+const MOTIVO_MAP = {'Saques e comissões':'Saques/Com.','Saques/Comissão':'Saques/Com.'};
+
+function parseMonth(val) {
+  if (!val) return null;
+  try { const s=String(val).slice(0,10); const [y,m]=s.split('-').map(Number); if(!y||!m) return null; return `${MONTHS_PT[m]}/${String(y).slice(2)}`; } catch { return null; }
+}
+function monthSortKey(lbl) { const [m,y]=lbl.split('/'); return parseInt(y)*100+(MONTHS_ORD[m]||0); }
+function categorizeBloqueio(s) {
+  const hasTos=s.includes('ToS')||s.includes('Descumprimento'), hasFraude=s.toLowerCase().includes('fraude'),
+        hasLink=s.toLowerCase().includes('link de vendas'), hasCb=s.toLowerCase().includes('chargeback'),
+        hasIl=s.toLowerCase().includes('lícito'), hasSaque=s.includes('Saque');
+  if(hasTos&&hasCb&&hasFraude) return 'ToS+Fraude+CB'; if(hasTos&&hasCb) return 'ToS+Chargeback';
+  if(hasFraude&&hasCb) return 'Fraude+CB'; if(hasFraude&&hasLink) return 'Fraude+Link';
+  if(hasTos) return 'ToS Grave'; if(hasFraude) return 'Fraude'; if(hasLink) return 'Link Desativado';
+  if(hasCb) return 'Chargeback'; if(hasIl) return 'Ilícitos'; if(hasSaque) return 'Saque Bloqueado'; return 'Outros';
+}
+
+function processRows(rows) {
+  let total=0,negativas=0,umaEstrela=0,prodRep=0,bloqueados=0,reavaliaram=0,subiram5=0,positivas=0;
+  let regularNeg=0,buyerNeg=0,creatorNeg=0,ambigNeg=0,umaEstrelaReav=0;
+  const monthly={},motivosNeg={},idiomasNeg={},bloqueioTypes={};
+  for(const row of rows) {
+    const dRaw=row['Classificação'],eRaw=row['Houve reavaliação?'],jRaw=row['Status Produto'];
+    const lRaw=row['Status Produtor']||'',mRaw=row['Motivo de contato']||'',bRaw=row['Idioma']||'',aRaw=row['Data da avaliação']||'';
+    const d=parseFloat(String(dRaw).replace(',','.'));
+    if(![1,2,3,4,5].includes(d)) continue;
+    total++; const rating=Math.round(d); const ml=parseMonth(aRaw);
+    if(ml){if(!monthly[ml])monthly[ml]={1:0,2:0,3:0,4:0,5:0}; monthly[ml][rating]++;}
+    if(d<=2)negativas++; if(d===1)umaEstrela++; if(d>=4)positivas++;
+    if(String(jRaw).trim()==='Reprovado'&&d<=2)prodRep++;
+    if(lRaw.includes('Bloqueio')&&d<=2){bloqueados++;const cat=categorizeBloqueio(lRaw);bloqueioTypes[cat]=(bloqueioTypes[cat]||0)+1;}
+    const lClean=lRaw.trim(); if((lClean==='Regular'||lClean===''||lClean==='None')&&d<=2)regularNeg++;
+    const eStr=String(eRaw||'').trim();
+    if(eStr&&eStr!=='-'&&eStr!=='None'&&eStr!==''){reavaliaram++;if(parseFloat(eStr)===5)subiram5++;if(d===1)umaEstrelaReav++;}
+    if(d<=2){
+      const mStr=String(mRaw).trim();
+      if(mStr&&mStr!=='None'){const mNorm=MOTIVO_MAP[mStr]||mStr;motivosNeg[mNorm]=(motivosNeg[mNorm]||0)+1;
+        if(BUYER_MOTIVOS.has(mStr))buyerNeg++;else if(CREATOR_MOTIVOS.has(mStr))creatorNeg++;else ambigNeg++;}
+      else ambigNeg++;
+      const bStr=String(bRaw).trim(); if(bStr&&bStr!=='None')idiomasNeg[bStr]=(idiomasNeg[bStr]||0)+1;
+    }
+  }
+  const sortedMonths=Object.keys(monthly).sort((a,b)=>monthSortKey(a)-monthSortKey(b));
+  const monthlyData={labels:sortedMonths,datasets:Object.fromEntries([1,2,3,4,5].map(r=>[r,sortedMonths.map(m=>monthly[m][r]||0)]))};
+  const motivos=Object.entries(motivosNeg).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([l,v])=>({label:l,value:v}));
+  const idiomas=Object.entries(idiomasNeg).sort((a,b)=>b[1]-a[1]).map(([l,v])=>({label:l,value:v}));
+  const bloqueioList=Object.entries(bloqueioTypes).sort((a,b)=>b[1]-a[1]).map(([l,v])=>({label:l,value:v}));
+  const topIdiomaPct=idiomas[0]&&negativas?Math.round(idiomas[0].value/negativas*100):0;
+  const cobrancaCount=(motivos.find(x=>x.label==='Cobrança não reconhecida')||{}).value||0;
+  return{lastUpdated:new Date().toISOString(),total,negativas,negativasPct:total?Math.round(negativas/total*100):0,
+    umaEstrela,umaEstrelaPct:total?Math.round(umaEstrela/total*100):0,produtoReprovado:prodRep,
+    bloqueados,regularNeg,reavaliaram,subiramCinco:subiram5,positivas,buyerNeg,creatorNeg,ambigNeg,
+    umaEstrelaReav,topIdiomaPct,topIdiomaNome:idiomas[0]?.label||'',cobrancaCount,monthlyData,motivos,idiomas,bloqueioTypes:bloqueioList};
+}
+
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+function setHTML(id,val){const el=document.getElementById(id);if(el)el.innerHTML=val;}
+function formatDate(iso){try{const d=new Date(iso);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}catch{return iso;}}
+function destroyChart(ref){if(ref){try{ref.destroy();}catch{}}return null;}
+
+function renderDashboard(data) {
+  const d=data;
+  setText('headerTotal',d.total); setText('totalLabel',d.total);
+  setText('footerBase',`Base: ${d.total} avaliações · Trustpilot`);
+  if(d.lastUpdated)setText('lastUpdatedLabel',`Atualizado: ${formatDate(d.lastUpdated)}`);
+  setText('kpiTaxaNeg',`${d.negativasPct}%`); setText('kpiTaxaNegSub',`${d.negativas} de ${d.total} avaliações`);
+  setText('kpiUmaEstrela',d.umaEstrela); setText('kpiUmaEsRelaSub',`${d.umaEstrelaPct}% do total`);
+  setText('kpiProdRep',d.produtoReprovado); setText('kpiBloqueados',d.bloqueados);
+  setText('kpiReavaliaram',d.reavaliaram); setText('kpiReavaliaramSub',`somente ${d.subiramCinco} subiram p/ 5★`);
+  setText('kpiPositivas',d.positivas);
+  setText('idiomaDesc',`${d.topIdiomaNome} responde por ${d.topIdiomaPct}% das negativas — sinal de concentração em mercados LATAM.`);
+  const negTotal=d.buyerNeg+d.creatorNeg+d.ambigNeg||1;
+  setText('profileBuyer',d.buyerNeg); setText('profileCreator',d.creatorNeg); setText('profileAmbig',d.ambigNeg);
+  setHTML('profileDesc',`<strong style="color:var(--text)">O que isso significa:</strong> Compradores são a maioria identificável das reclamações (${Math.round(d.buyerNeg/negTotal*100)}% com sinal claro de Buyer). Creators com sinal explícito são minoria (${Math.round(d.creatorNeg/negTotal*100)}%) — mas o bloco ambíguo de ${Math.round(d.ambigNeg/negTotal*100)}% provavelmente contém Creators reclamando de acesso, bloqueio e documentação.`);
+  const regularNeg=d.regularNeg||(d.negativas-d.bloqueados);
+  setText('bloqueioDesc',`${d.bloqueados} reviews negativas envolvem produtores com algum tipo de bloqueio ativo`);
+  setText('kpiBloqueadosInsight',d.bloqueados);
+  const bloqueiadosPct=d.negativas?Math.round(d.bloqueados/d.negativas*100):0;
+  setHTML('bloqueioInsightText',`${bloqueiadosPct}% das reviews negativas têm um produtor bloqueado. Mas o número que chama mais atenção é o oposto: <strong style="color:var(--text)">${regularNeg} reviews negativas vêm de produtores "Regular"</strong> — sem qualquer flag de bloqueio.`);
+  const tagColors={'ToS Grave':'red','Fraude':'red','ToS+Chargeback':'yellow','ToS+Fraude+CB':'yellow','Chargeback':'yellow','Link Desativado':'yellow','Ilícitos':'gray','Saque Bloqueado':'gray','Fraude+Link':'blue','Fraude+CB':'blue','Outros':'gray'};
+  setHTML('bloqueioTags',(d.bloqueioTypes||[]).map(t=>`<span class="tag ${tagColors[t.label]||'gray'}">${t.value} × ${t.label}</span>`).join(''));
+  const cobranca=d.cobrancaCount||'—'; setHTML('fraudeCobrancaCount',`${cobranca}<span>reviews</span>`);
+  setText('kpiReavaliaramInsight',d.reavaliaram);
+  setHTML('reavaliaramText',`De ${d.total} avaliações, ${d.reavaliaram} tiveram alguma alteração. A maioria origina de avaliações 1★ — mas <strong style="color:var(--text)">apenas ${d.subiramCinco} subiram para 5★</strong>.`);
+  setHTML('reavaliaramTags',`<span class="tag green">${d.subiramCinco}× subiu para 5★</span>`);
+  const reversaoPct=d.umaEstrelaReav?Math.round(d.subiramCinco/d.umaEstrelaReav*100):0;
+  setText('kpiReversaoTaxa',`${reversaoPct}%`);
+  setHTML('reversaoText',`Das ${d.umaEstrelaReav} reviews 1★ que tiveram alguma reavaliação, apenas ~${reversaoPct}% subiram a nota. Isso indica que o processo pós-publicação <strong style="color:var(--text)">não está convertendo reclamações em recuperação de reputação de forma sistemática</strong>.`);
+
+  Chart.defaults.color='#8b8fa8'; Chart.defaults.borderColor='#2a2d36';
+  Chart.defaults.font.family="'DM Mono', monospace"; Chart.defaults.font.size=11;
+
+  chartMonthly=destroyChart(chartMonthly);
+  const mData=d.monthlyData||{};
+  chartMonthly=new Chart(document.getElementById('monthlyChart').getContext('2d'),{type:'bar',data:{labels:mData.labels||[],datasets:[
+    {label:'1★',data:mData.datasets?.['1']||[],backgroundColor:'rgba(232,72,85,0.8)',borderRadius:3},
+    {label:'2★',data:mData.datasets?.['2']||[],backgroundColor:'rgba(247,149,59,0.8)',borderRadius:3},
+    {label:'3★',data:mData.datasets?.['3']||[],backgroundColor:'rgba(247,183,49,0.8)',borderRadius:3},
+    {label:'4★',data:mData.datasets?.['4']||[],backgroundColor:'rgba(91,141,238,0.5)',borderRadius:3},
+    {label:'5★',data:mData.datasets?.['5']||[],backgroundColor:'rgba(62,207,142,0.7)',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{usePointStyle:true,boxWidth:8}}},scales:{x:{stacked:true,grid:{color:'rgba(42,45,54,0.5)'}},y:{stacked:true,grid:{color:'rgba(42,45,54,0.5)'}}}}});
+
+  chartMotivos=destroyChart(chartMotivos);
+  const motivos=d.motivos||[];
+  chartMotivos=new Chart(document.getElementById('motivosChart').getContext('2d'),{type:'bar',data:{labels:motivos.map(x=>x.label),datasets:[{data:motivos.map(x=>x.value),backgroundColor:motivos.map((_,i)=>i<3?'rgba(232,72,85,0.7)':i<6?'rgba(247,183,49,0.7)':'rgba(91,141,238,0.5)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(42,45,54,0.5)'}},y:{grid:{display:false}}}}});
+
+  chartIdioma=destroyChart(chartIdioma);
+  const idiomaColors=['#e84855','#5b8dee','#f7b731','#3ecf8e','#9b59b6','#f7953b','#2a2d36','#a0aec0'];
+  const idiomas=d.idiomas||[];
+  chartIdioma=new Chart(document.getElementById('idiomaChart').getContext('2d'),{type:'doughnut',data:{labels:idiomas.map(x=>x.label),datasets:[{data:idiomas.map(x=>x.value),backgroundColor:idiomas.map((_,i)=>idiomaColors[i]||'#565a72'),borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8,padding:12}}},cutout:'65%'}});
+
+  chartBloqueio=destroyChart(chartBloqueio);
+  const bloqueioList=d.bloqueioTypes||[];
+  const bloqueioColors=['rgba(232,72,85,0.8)','rgba(232,72,85,0.65)','rgba(247,149,59,0.7)','rgba(247,149,59,0.6)','rgba(247,183,49,0.6)','rgba(247,183,49,0.5)','rgba(91,141,238,0.5)','rgba(91,141,238,0.4)'];
+  chartBloqueio=new Chart(document.getElementById('bloqueioChart').getContext('2d'),{type:'bar',data:{labels:bloqueioList.map(x=>x.label),datasets:[{data:bloqueioList.map(x=>x.value),backgroundColor:bloqueioList.map((_,i)=>bloqueioColors[i]||'rgba(139,143,168,0.4)'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(42,45,54,0.5)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+}
+
+async function fetchLocalData() {
+  try {
+    const resp=await fetch('./data.json?t='+Date.now());
+    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    renderDashboard(await resp.json());
+  } catch(err) { console.error('Erro ao carregar data.json:',err); setText('lastUpdatedLabel','Erro ao carregar dados locais'); }
+}
+
+async function fetchFromSheetDB() {
+  if(!SHEETDB_URL||SHEETDB_URL.includes('SEU_ID_AQUI')){alert('Configure a URL do SheetsDB no código (variável SHEETDB_URL) antes de usar este botão.');return;}
+  const btn=document.getElementById('btnAtualizar');
+  btn.disabled=true; btn.classList.add('loading'); setText('lastUpdatedLabel','Buscando dados…');
+  try {
+    const resp=await fetch(`${SHEETDB_URL}?sheet=${encodeURIComponent(SHEET_NAME)}&limit=0`);
+    if(!resp.ok) throw new Error(`SheetsDB retornou HTTP ${resp.status}`);
+    const rows=await resp.json();
+    console.log('[SheetsDB] total linhas:', rows.length);
+    if(rows.length>0){console.log('[SheetsDB] 1ª linha:', JSON.stringify(rows[0]));console.log('[SheetsDB] colunas disponíveis:', Object.keys(rows[0]));}
+    else{console.warn('[SheetsDB] resposta vazia - verifique o nome da aba e a URL');}
+    const data=processRows(rows);
+    console.log('[processRows] total processado:', data.total, '| negativas:', data.negativas);
+    renderDashboard(data); setText('lastUpdatedLabel',`Atualizado agora · ${rows.length} linhas`);
+  } catch(err) { console.error('Erro:',err); setText('lastUpdatedLabel',`Erro: ${err.message}`); alert(`Não foi possível buscar os dados.\n\n${err.message}`); }
+  finally { btn.disabled=false; btn.classList.remove('loading'); }
+}
+
+function showTab(id) {
+  document.querySelectorAll('.quote-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.quote-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded',fetchLocalData);
+</script>
+</body>
+</html>
