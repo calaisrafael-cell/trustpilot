@@ -389,7 +389,8 @@ function processRows(rows) {
       const bStr=String(bRaw).trim(); if(bStr&&bStr!=='None')idiomasNeg[bStr]=(idiomasNeg[bStr]||0)+1;
     }
   }
-  const sortedMonths=Object.keys(monthly).sort((a,b)=>monthSortKey(a)-monthSortKey(b));
+  const now=new Date(); const currentMonthKey=(now.getFullYear()%100)*100+(now.getMonth()+1);
+  const sortedMonths=Object.keys(monthly).filter(lbl=>monthSortKey(lbl)<=currentMonthKey).sort((a,b)=>monthSortKey(a)-monthSortKey(b));
   const monthlyData={labels:sortedMonths,datasets:Object.fromEntries([1,2,3,4,5].map(r=>[r,sortedMonths.map(m=>monthly[m][r]||0)]))};
   const motivos=Object.entries(motivosNeg).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([l,v])=>({label:l,value:v}));
   const idiomas=Object.entries(idiomasNeg).sort((a,b)=>b[1]-a[1]).map(([l,v])=>({label:l,value:v}));
