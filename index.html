@@ -328,9 +328,30 @@ const BUYER_MOTIVOS   = new Set(['Reembolso','Cobrança não reconhecida','Conte
 const CREATOR_MOTIVOS = new Set(['Saques e comissões','Saques/Comissão','Saques/Com.','Programa de afiliados','Suporte Produtor','Cartão Hotmart','Atribuição de comissão','Ferramentas','Página de vendas']);
 const MOTIVO_MAP = {'Saques e comissões':'Saques/Com.','Saques/Comissão':'Saques/Com.'};
 
+function parseRating(val) {
+  if (val == null) return NaN;
+  const s = String(val).trim();
+  const stars = (s.match(/★/g) || []).length;
+  if (stars > 0) return stars;
+  return parseFloat(s.replace(',', '.'));
+}
 function parseMonth(val) {
   if (!val) return null;
-  try { const s=String(val).slice(0,10); const [y,m]=s.split('-').map(Number); if(!y||!m) return null; return `${MONTHS_PT[m]}/${String(y).slice(2)}`; } catch { return null; }
+  try {
+    const s = String(val).slice(0, 10);
+    if (s.includes('-')) {
+      const [y, m] = s.split('-').map(Number);
+      if (y && m) return `${MONTHS_PT[m]}/${String(y).slice(2)}`;
+    }
+    if (s.includes('/')) {
+      const parts = s.split('/').map(Number);
+      if (parts.length === 3) {
+        const [dd, m, y] = parts;
+        if (y && m) return `${MONTHS_PT[m]}/${String(y).slice(2)}`;
+      }
+    }
+  } catch {}
+  return null;
 }
 function monthSortKey(lbl) { const [m,y]=lbl.split('/'); return parseInt(y)*100+(MONTHS_ORD[m]||0); }
 function categorizeBloqueio(s) {
@@ -348,9 +369,9 @@ function processRows(rows) {
   let regularNeg=0,buyerNeg=0,creatorNeg=0,ambigNeg=0,umaEstrelaReav=0;
   const monthly={},motivosNeg={},idiomasNeg={},bloqueioTypes={};
   for(const row of rows) {
-    const dRaw=row['Classificação'],eRaw=row['Houve reavaliação?'],jRaw=row['Status Produto'];
+    const dRaw=row['Classificação'],eRaw=row['Houve reavaliação?']??row['Houve reavaliação'],jRaw=row['Status Produto'];
     const lRaw=row['Status Produtor']||'',mRaw=row['Motivo de contato']||'',bRaw=row['Idioma']||'',aRaw=row['Data da avaliação']||'';
-    const d=parseFloat(String(dRaw).replace(',','.'));
+    const d=parseRating(dRaw);
     if(![1,2,3,4,5].includes(d)) continue;
     total++; const rating=Math.round(d); const ml=parseMonth(aRaw);
     if(ml){if(!monthly[ml])monthly[ml]={1:0,2:0,3:0,4:0,5:0}; monthly[ml][rating]++;}
@@ -359,7 +380,7 @@ function processRows(rows) {
     if(lRaw.includes('Bloqueio')&&d<=2){bloqueados++;const cat=categorizeBloqueio(lRaw);bloqueioTypes[cat]=(bloqueioTypes[cat]||0)+1;}
     const lClean=lRaw.trim(); if((lClean==='Regular'||lClean===''||lClean==='None')&&d<=2)regularNeg++;
     const eStr=String(eRaw||'').trim();
-    if(eStr&&eStr!=='-'&&eStr!=='None'&&eStr!==''){reavaliaram++;if(parseFloat(eStr)===5)subiram5++;if(d===1)umaEstrelaReav++;}
+    if(eStr&&eStr!=='-'&&eStr!=='None'&&eStr!==''){reavaliaram++;if(parseRating(eStr)===5)subiram5++;if(d===1)umaEstrelaReav++;}
     if(d<=2){
       const mStr=String(mRaw).trim();
       if(mStr&&mStr!=='None'){const mNorm=MOTIVO_MAP[mStr]||mStr;motivosNeg[mNorm]=(motivosNeg[mNorm]||0)+1;
