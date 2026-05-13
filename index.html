@@ -300,12 +300,12 @@
   <div class="recs-grid fade-in">
     <div class="rec-card"><span class="rec-priority p1">P1 · Urgente</span><h3>🔴 Takedown dos produtos de golpe ativos</h3><p>Os produtos IDs 7446199, 7446280 (camisa Bayern), 6438431 e 6072916 (caixas Amazon) e os vinculados ao funil de venda espanhol estão gerando reclamações em escala. Ação imediata de Content Ops e Fraud Prevention.</p><div class="rec-owner">→ Content Ops · Fraud Prevention</div></div>
     <div class="rec-card"><span class="rec-priority p1">P1 · Urgente</span><h3>🔴 Investigar cobranças europeias não reconhecidas</h3><p>Reviews de usuários europeus (DE, FR, NL, IT) relatam cobranças de €100-1.100 sem qualquer produto ou conta Hotmart. Risco regulatório alto (GDPR, PSD2).</p><div class="rec-owner">→ Fraud Prevention · Finops · Jurídico</div></div>
-    <div class="rec-card"><span class="rec-priority p1">P1 · Estrutural</span><h3>🔴 Revisar política de funil de venda e upsell forçado</h3><p>O padrão de "assinaturas semanais não autorizadas" indica falha de produto: o botão de recusa não está funcionando ou o funil bypassa o consentimento explícito.</p><div class="rec-owner">→ Produto · Trust & Safety</div></div>
+    <div class="rec-card"><span class="rec-priority p1">P1 · Estrutural</span><h3>🔴 Revisar política de funil de venda e upsell forçado</h3><p>O padrão de "assinaturas semanais não autorizadas" indica falha de produto: o botão de recusa não está funcionando ou o funil bypassa o consentimento explícito.</p><div class="rec-owner">→ Produto · Trust &amp; Safety</div></div>
     <div class="rec-card"><span class="rec-priority p2">P2 · Médio prazo</span><h3>🟡 Criar processo sistemático de recovery no Trustpilot</h3><p>Apenas 6 reviews converteram para 5★. Há oportunidade de montar um fluxo de acompanhamento proativo. Plataformas maduras atingem 15-25% de conversão.</p><div class="rec-owner">→ CX Ops · Atendimento</div></div>
     <div class="rec-card"><span class="rec-priority p2">P2 · Médio prazo</span><h3>🟡 Melhorar self-service de reembolso e cancelamento de assinatura</h3><p>Reembolso é o motivo #1 das negativas. Múltiplos clientes relatam não conseguir completar o processo sem atendimento humano.</p><div class="rec-owner">→ Produto · Help Center</div></div>
     <div class="rec-card"><span class="rec-priority p2">P2 · Médio prazo</span><h3>🟡 Melhorar verificação em dois fatores</h3><p>Reclamações de 2FA com código que nunca chega ou expira são frequentes em espanhol. Revisão do fluxo com fallback funcional.</p><div class="rec-owner">→ Produto · Segurança</div></div>
     <div class="rec-card"><span class="rec-priority p3">P3 · Monitoramento</span><h3>🟢 Monitor de padrões de fraude por idioma</h3><p>O cluster de alemão em março/abril 2026 deveria ter sido detectado em semanas, não meses. Criar alerta automatizado de clustering por idioma + produto + motivo.</p><div class="rec-owner">→ CX Ops · Data</div></div>
-    <div class="rec-card"><span class="rec-priority p3">P3 · Produto</span><h3>🟢 Investigar produtos aprovados com alto volume de reembolso</h3><p>Reviews negativas de reembolso têm Status Produto = "Aprovado". Avaliar threshold de taxa de reembolso como critério complementar de monitoramento.</p><div class="rec-owner">→ Trust & Safety · Produto</div></div>
+    <div class="rec-card"><span class="rec-priority p3">P3 · Produto</span><h3>🟢 Investigar produtos aprovados com alto volume de reembolso</h3><p>Reviews negativas de reembolso têm Status Produto = "Aprovado". Avaliar threshold de taxa de reembolso como critério complementar de monitoramento.</p><div class="rec-owner">→ Trust &amp; Safety · Produto</div></div>
   </div>
 
   <div class="footnote">
@@ -469,7 +469,12 @@ async function fetchLocalData() {
   try {
     const resp=await fetch('./data.json?t='+Date.now());
     if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    renderDashboard(await resp.json());
+    const remote=await resp.json();
+    let cached=null;
+    try { const raw=localStorage.getItem('trustpilot_data'); if(raw) cached=JSON.parse(raw); } catch{}
+    const remoteTs=remote.lastUpdated?new Date(remote.lastUpdated).getTime():0;
+    const cachedTs=cached?.lastUpdated?new Date(cached.lastUpdated).getTime():0;
+    renderDashboard(cachedTs>remoteTs?cached:remote);
   } catch(err) { console.error('Erro ao carregar data.json:',err); setText('lastUpdatedLabel','Erro ao carregar dados locais'); }
 }
 
@@ -486,6 +491,7 @@ async function fetchFromSheetDB() {
     else{console.warn('[SheetsDB] resposta vazia - verifique o nome da aba e a URL');}
     const data=processRows(rows);
     console.log('[processRows] total processado:', data.total, '| negativas:', data.negativas);
+    try { localStorage.setItem('trustpilot_data', JSON.stringify(data)); } catch{}
     renderDashboard(data); setText('lastUpdatedLabel',`Atualizado agora · ${rows.length} linhas`);
   } catch(err) { console.error('Erro:',err); setText('lastUpdatedLabel',`Erro: ${err.message}`); alert(`Não foi possível buscar os dados.\n\n${err.message}`); }
   finally { btn.disabled=false; btn.classList.remove('loading'); }

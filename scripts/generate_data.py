@@ -34,15 +34,30 @@ MOTIVO_MAP = {
 }
 
 
+def parse_rating(val):
+    if val is None:
+        return None
+    s = str(val).strip()
+    stars = s.count('★')
+    if stars > 0:
+        return float(stars)
+    try:
+        return float(s.replace(',', '.'))
+    except Exception:
+        return None
+
+
 def parse_month(val):
     if not val:
         return None
-    try:
-        s = str(val)[:10]
-        d = datetime.strptime(s, '%Y-%m-%d')
-        return f"{MONTHS_PT[d.month]}/{str(d.year)[2:]}"
-    except Exception:
-        return None
+    s = str(val)[:10]
+    for fmt in ('%Y-%m-%d', '%d/%m/%Y'):
+        try:
+            d = datetime.strptime(s, fmt)
+            return f"{MONTHS_PT[d.month]}/{str(d.year)[2:]}"
+        except Exception:
+            continue
+    return None
 
 
 def categorize_bloqueio(status):
@@ -99,15 +114,12 @@ def process_rows(rows):
         a = row.get('Data da avaliação', '')
         b = row.get('Idioma', '')
         d_raw = row.get('Classificação', '')
-        e_raw = row.get('Houve reavaliação?', '')
+        e_raw = row.get('Houve reavaliação?') or row.get('Houve reavaliação', '')
         j_raw = row.get('Status Produto', '')
         l_raw = row.get('Status Produtor', '')
         m_raw = row.get('Motivo de contato', '')
 
-        try:
-            d_val = float(str(d_raw).replace(',', '.'))
-        except Exception:
-            continue
+        d_val = parse_rating(d_raw)
         if d_val not in [1, 2, 3, 4, 5]:
             continue
 
@@ -137,11 +149,8 @@ def process_rows(rows):
         e_str = str(e_raw).strip() if e_raw else ''
         if e_str and e_str not in ('-', 'None', ''):
             reavaliaram += 1
-            try:
-                if float(e_str) == 5:
-                    subiram5 += 1
-            except Exception:
-                pass
+            if parse_rating(e_str) == 5:
+                subiram5 += 1
             if d_val == 1:
                 uma_estrela_reav += 1
 
@@ -163,7 +172,12 @@ def process_rows(rows):
             if b_str and b_str not in ('None', ''):
                 idiomas_neg[b_str] += 1
 
-    sorted_months = sorted(monthly.keys(), key=month_sort_key)
+    now = datetime.now()
+    current_key = (now.year % 100) * 100 + now.month
+    sorted_months = sorted(
+        (m for m in monthly if month_sort_key(m) <= current_key),
+        key=month_sort_key
+    )
     monthly_data = {
         'labels': sorted_months,
         'datasets': {
@@ -213,7 +227,7 @@ def main():
         sys.exit(1)
 
     sheet_name = os.environ.get('SHEET_NAME', 'Trustpilot')
-    url = f"{sheetdb_url}?sheet={sheet_name}&limit=0"
+    url = f"{sheetdb_url}?sheet={sheet_name}"
 
     print(f'Fetching data from SheetsDB (sheet: {sheet_name})...')
     resp = requests.get(url, timeout=60)
