@@ -1,34 +1,183 @@
 {
-  "lastUpdated": "2026-05-08T16:20:09Z",
-  "total": 0,
-  "negativas": 0,
-  "negativasPct": 0,
-  "umaEstrela": 0,
-  "umaEstrelaPct": 0,
-  "produtoReprovado": 0,
-  "bloqueados": 0,
-  "regularNeg": 0,
-  "reavaliaram": 0,
-  "subiramCinco": 0,
-  "positivas": 0,
-  "buyerNeg": 0,
-  "creatorNeg": 0,
-  "ambigNeg": 0,
-  "umaEstrelaReav": 0,
-  "topIdiomaPct": 0,
-  "topIdiomaNome": "",
-  "cobrancaCount": 0,
+  "lastUpdated": "2026-05-15T16:54:19Z",
+  "total": 817,
+  "negativas": 503,
+  "negativasPct": 62,
+  "umaEstrela": 467,
+  "umaEstrelaPct": 57,
+  "produtoReprovado": 98,
+  "bloqueados": 67,
+  "regularNeg": 404,
+  "reavaliaram": 22,
+  "subiramCinco": 6,
+  "positivas": 260,
+  "buyerNeg": 249,
+  "creatorNeg": 16,
+  "ambigNeg": 238,
+  "umaEstrelaReav": 21,
+  "topIdiomaPct": 45,
+  "topIdiomaNome": "Espanhol",
+  "cobrancaCount": 58,
   "monthlyData": {
-    "labels": [],
+    "labels": [
+      "Out/25",
+      "Nov/25",
+      "Dez/25",
+      "Jan/26",
+      "Fev/26",
+      "Mar/26",
+      "Abr/26",
+      "Mai/26"
+    ],
     "datasets": {
-      "1": [],
-      "2": [],
-      "3": [],
-      "4": [],
-      "5": []
+      "1": [
+        19,
+        73,
+        41,
+        39,
+        39,
+        156,
+        72,
+        27
+      ],
+      "2": [
+        0,
+        0,
+        2,
+        0,
+        1,
+        16,
+        14,
+        3
+      ],
+      "3": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        27,
+        20,
+        5
+      ],
+      "4": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        12,
+        26,
+        7
+      ],
+      "5": [
+        10,
+        6,
+        0,
+        1,
+        0,
+        43,
+        111,
+        43
+      ]
     }
   },
-  "motivos": [],
-  "idiomas": [],
-  "bloqueioTypes": []
+  "motivos": [
+    {
+      "label": "Reembolso",
+      "value": 180
+    },
+    {
+      "label": "Suporte Hotmart",
+      "value": 71
+    },
+    {
+      "label": "Cobrança não reconhecida",
+      "value": 58
+    },
+    {
+      "label": "Acesso",
+      "value": 48
+    },
+    {
+      "label": "Bloqueio",
+      "value": 18
+    },
+    {
+      "label": "Documentação",
+      "value": 18
+    },
+    {
+      "label": "Assinatura",
+      "value": 17
+    },
+    {
+      "label": "Conta",
+      "value": 14
+    },
+    {
+      "label": "Pagamento",
+      "value": 13
+    },
+    {
+      "label": "Conteúdo do produto",
+      "value": 9
+    }
+  ],
+  "idiomas": [
+    {
+      "label": "Espanhol",
+      "value": 228
+    },
+    {
+      "label": "Inglês",
+      "value": 119
+    },
+    {
+      "label": "Alemão",
+      "value": 71
+    },
+    {
+      "label": "Português",
+      "value": 32
+    },
+    {
+      "label": "Italiano",
+      "value": 27
+    },
+    {
+      "label": "Francês",
+      "value": 24
+    },
+    {
+      "label": "Holandês",
+      "value": 2
+    }
+  ],
+  "bloqueioTypes": [
+    {
+      "label": "ToS Grave",
+      "value": 29
+    },
+    {
+      "label": "Fraude",
+      "value": 22
+    },
+    {
+      "label": "Chargeback",
+      "value": 8
+    },
+    {
+      "label": "ToS+Chargeback",
+      "value": 5
+    },
+    {
+      "label": "Fraude+Link",
+      "value": 2
+    },
+    {
+      "label": "Fraude+CB",
+      "value": 1
+    }
+  ]
 }
