@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-05-15T16:54:19Z",
-  "total": 817,
-  "negativas": 503,
-  "negativasPct": 62,
-  "umaEstrela": 467,
-  "umaEstrelaPct": 57,
-  "produtoReprovado": 98,
-  "bloqueados": 67,
-  "regularNeg": 404,
-  "reavaliaram": 22,
+  "lastUpdated": "2026-05-22T17:12:16Z",
+  "total": 864,
+  "negativas": 519,
+  "negativasPct": 60,
+  "umaEstrela": 479,
+  "umaEstrelaPct": 55,
+  "produtoReprovado": 101,
+  "bloqueados": 68,
+  "regularNeg": 407,
+  "reavaliaram": 24,
   "subiramCinco": 6,
-  "positivas": 260,
-  "buyerNeg": 249,
-  "creatorNeg": 16,
-  "ambigNeg": 238,
-  "umaEstrelaReav": 21,
-  "topIdiomaPct": 45,
+  "positivas": 288,
+  "buyerNeg": 252,
+  "creatorNeg": 22,
+  "ambigNeg": 245,
+  "umaEstrelaReav": 22,
+  "topIdiomaPct": 46,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
   "monthlyData": {
@@ -38,7 +38,7 @@
         39,
         156,
         72,
-        27
+        39
       ],
       "2": [
         0,
@@ -48,7 +48,7 @@
         1,
         16,
         14,
-        3
+        7
       ],
       "3": [
         0,
@@ -58,7 +58,7 @@
         0,
         27,
         20,
-        5
+        8
       ],
       "4": [
         0,
@@ -68,7 +68,7 @@
         0,
         12,
         26,
-        7
+        11
       ],
       "5": [
         10,
@@ -78,18 +78,18 @@
         0,
         43,
         111,
-        43
+        67
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 180
+      "value": 183
     },
     {
       "label": "Suporte Hotmart",
-      "value": 71
+      "value": 72
     },
     {
       "label": "Cobrança não reconhecida",
@@ -100,11 +100,11 @@
       "value": 48
     },
     {
-      "label": "Bloqueio",
-      "value": 18
+      "label": "Documentação",
+      "value": 20
     },
     {
-      "label": "Documentação",
+      "label": "Bloqueio",
       "value": 18
     },
     {
@@ -117,21 +117,21 @@
     },
     {
       "label": "Pagamento",
-      "value": 13
+      "value": 14
     },
     {
-      "label": "Conteúdo do produto",
-      "value": 9
+      "label": "Saques/Com.",
+      "value": 11
     }
   ],
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 228
+      "value": 241
     },
     {
       "label": "Inglês",
-      "value": 119
+      "value": 120
     },
     {
       "label": "Alemão",
@@ -139,11 +139,11 @@
     },
     {
       "label": "Português",
-      "value": 32
+      "value": 33
     },
     {
       "label": "Italiano",
-      "value": 27
+      "value": 28
     },
     {
       "label": "Francês",
@@ -161,7 +161,7 @@
     },
     {
       "label": "Fraude",
-      "value": 22
+      "value": 23
     },
     {
       "label": "Chargeback",
