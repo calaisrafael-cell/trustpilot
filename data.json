@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-05-22T17:12:16Z",
-  "total": 864,
-  "negativas": 519,
-  "negativasPct": 60,
-  "umaEstrela": 479,
-  "umaEstrelaPct": 55,
-  "produtoReprovado": 101,
-  "bloqueados": 68,
-  "regularNeg": 407,
-  "reavaliaram": 24,
+  "lastUpdated": "2026-05-29T18:14:26Z",
+  "total": 939,
+  "negativas": 544,
+  "negativasPct": 58,
+  "umaEstrela": 499,
+  "umaEstrelaPct": 53,
+  "produtoReprovado": 104,
+  "bloqueados": 70,
+  "regularNeg": 410,
+  "reavaliaram": 27,
   "subiramCinco": 6,
-  "positivas": 288,
-  "buyerNeg": 252,
-  "creatorNeg": 22,
-  "ambigNeg": 245,
-  "umaEstrelaReav": 22,
-  "topIdiomaPct": 46,
+  "positivas": 334,
+  "buyerNeg": 261,
+  "creatorNeg": 27,
+  "ambigNeg": 256,
+  "umaEstrelaReav": 23,
+  "topIdiomaPct": 47,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
   "monthlyData": {
@@ -38,7 +38,7 @@
         39,
         156,
         72,
-        39
+        59
       ],
       "2": [
         0,
@@ -48,7 +48,7 @@
         1,
         16,
         14,
-        7
+        12
       ],
       "3": [
         0,
@@ -58,7 +58,7 @@
         0,
         27,
         20,
-        8
+        12
       ],
       "4": [
         0,
@@ -68,7 +68,7 @@
         0,
         12,
         26,
-        11
+        19
       ],
       "5": [
         10,
@@ -78,18 +78,18 @@
         0,
         43,
         111,
-        67
+        105
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 183
+      "value": 192
     },
     {
       "label": "Suporte Hotmart",
-      "value": 72
+      "value": 75
     },
     {
       "label": "Cobrança não reconhecida",
@@ -97,41 +97,41 @@
     },
     {
       "label": "Acesso",
-      "value": 48
+      "value": 49
     },
     {
       "label": "Documentação",
-      "value": 20
+      "value": 25
     },
     {
       "label": "Bloqueio",
-      "value": 18
+      "value": 20
     },
     {
       "label": "Assinatura",
       "value": 17
     },
     {
-      "label": "Conta",
-      "value": 14
-    },
-    {
       "label": "Pagamento",
-      "value": 14
+      "value": 15
     },
     {
       "label": "Saques/Com.",
-      "value": 11
+      "value": 15
+    },
+    {
+      "label": "Conta",
+      "value": 14
     }
   ],
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 241
+      "value": 256
     },
     {
       "label": "Inglês",
-      "value": 120
+      "value": 125
     },
     {
       "label": "Alemão",
@@ -139,11 +139,11 @@
     },
     {
       "label": "Português",
-      "value": 33
+      "value": 35
     },
     {
       "label": "Italiano",
-      "value": 28
+      "value": 31
     },
     {
       "label": "Francês",
@@ -157,11 +157,11 @@
   "bloqueioTypes": [
     {
       "label": "ToS Grave",
-      "value": 29
+      "value": 30
     },
     {
       "label": "Fraude",
-      "value": 23
+      "value": 24
     },
     {
       "label": "Chargeback",
