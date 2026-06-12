@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-06-05T17:21:51Z",
-  "total": 1017,
-  "negativas": 567,
-  "negativasPct": 56,
-  "umaEstrela": 520,
-  "umaEstrelaPct": 51,
-  "produtoReprovado": 105,
+  "lastUpdated": "2026-06-12T17:39:48Z",
+  "total": 1093,
+  "negativas": 588,
+  "negativasPct": 54,
+  "umaEstrela": 537,
+  "umaEstrelaPct": 49,
+  "produtoReprovado": 106,
   "bloqueados": 71,
-  "regularNeg": 413,
+  "regularNeg": 420,
   "reavaliaram": 27,
   "subiramCinco": 6,
-  "positivas": 385,
-  "buyerNeg": 265,
-  "creatorNeg": 28,
-  "ambigNeg": 274,
+  "positivas": 436,
+  "buyerNeg": 268,
+  "creatorNeg": 31,
+  "ambigNeg": 289,
   "umaEstrelaReav": 23,
-  "topIdiomaPct": 48,
+  "topIdiomaPct": 50,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
   "monthlyData": {
@@ -39,8 +39,8 @@
         39,
         156,
         72,
-        63,
-        17
+        62,
+        35
       ],
       "2": [
         0,
@@ -51,7 +51,7 @@
         16,
         14,
         14,
-        0
+        4
       ],
       "3": [
         0,
@@ -62,7 +62,7 @@
         27,
         20,
         15,
-        1
+        5
       ],
       "4": [
         0,
@@ -73,7 +73,7 @@
         12,
         26,
         24,
-        8
+        18
       ],
       "5": [
         10,
@@ -84,14 +84,14 @@
         43,
         111,
         116,
-        27
+        68
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 196
+      "value": 199
     },
     {
       "label": "Suporte Hotmart",
@@ -107,22 +107,22 @@
     },
     {
       "label": "Documentação",
-      "value": 34
+      "value": 40
     },
     {
       "label": "Bloqueio",
-      "value": 23
+      "value": 24
     },
     {
       "label": "Assinatura",
       "value": 17
     },
     {
-      "label": "Pagamento",
-      "value": 15
+      "label": "Saques/Com.",
+      "value": 17
     },
     {
-      "label": "Saques/Com.",
+      "label": "Pagamento",
       "value": 15
     },
     {
@@ -133,7 +133,7 @@
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 274
+      "value": 293
     },
     {
       "label": "Inglês",
@@ -141,11 +141,11 @@
     },
     {
       "label": "Alemão",
-      "value": 71
+      "value": 72
     },
     {
       "label": "Português",
-      "value": 35
+      "value": 36
     },
     {
       "label": "Italiano",
