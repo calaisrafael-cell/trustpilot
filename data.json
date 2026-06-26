@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-06-12T17:39:48Z",
-  "total": 1093,
-  "negativas": 588,
-  "negativasPct": 54,
-  "umaEstrela": 537,
-  "umaEstrelaPct": 49,
+  "lastUpdated": "2026-06-26T17:03:46Z",
+  "total": 1216,
+  "negativas": 631,
+  "negativasPct": 52,
+  "umaEstrela": 571,
+  "umaEstrelaPct": 47,
   "produtoReprovado": 106,
   "bloqueados": 71,
-  "regularNeg": 420,
-  "reavaliaram": 27,
+  "regularNeg": 416,
+  "reavaliaram": 28,
   "subiramCinco": 6,
-  "positivas": 436,
-  "buyerNeg": 268,
-  "creatorNeg": 31,
-  "ambigNeg": 289,
-  "umaEstrelaReav": 23,
-  "topIdiomaPct": 50,
+  "positivas": 509,
+  "buyerNeg": 273,
+  "creatorNeg": 42,
+  "ambigNeg": 316,
+  "umaEstrelaReav": 24,
+  "topIdiomaPct": 51,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
   "monthlyData": {
@@ -37,10 +37,10 @@
         41,
         39,
         39,
-        156,
+        157,
         72,
         62,
-        35
+        69
       ],
       "2": [
         0,
@@ -51,7 +51,7 @@
         16,
         14,
         14,
-        4
+        13
       ],
       "3": [
         0,
@@ -62,7 +62,7 @@
         27,
         20,
         15,
-        5
+        12
       ],
       "4": [
         0,
@@ -73,7 +73,7 @@
         12,
         26,
         24,
-        18
+        30
       ],
       "5": [
         10,
@@ -84,18 +84,18 @@
         43,
         111,
         116,
-        68
+        129
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 199
+      "value": 204
     },
     {
       "label": "Suporte Hotmart",
-      "value": 77
+      "value": 81
     },
     {
       "label": "Cobrança não reconhecida",
@@ -103,41 +103,41 @@
     },
     {
       "label": "Acesso",
-      "value": 50
+      "value": 54
     },
     {
       "label": "Documentação",
-      "value": 40
+      "value": 53
     },
     {
       "label": "Bloqueio",
-      "value": 24
-    },
-    {
-      "label": "Assinatura",
-      "value": 17
+      "value": 26
     },
     {
       "label": "Saques/Com.",
-      "value": 17
+      "value": 25
+    },
+    {
+      "label": "Assinatura",
+      "value": 21
+    },
+    {
+      "label": "Conta",
+      "value": 15
     },
     {
       "label": "Pagamento",
       "value": 15
-    },
-    {
-      "label": "Conta",
-      "value": 14
     }
   ],
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 293
+      "value": 324
     },
     {
       "label": "Inglês",
-      "value": 130
+      "value": 135
     },
     {
       "label": "Alemão",
@@ -145,11 +145,11 @@
     },
     {
       "label": "Português",
-      "value": 36
+      "value": 40
     },
     {
       "label": "Italiano",
-      "value": 31
+      "value": 33
     },
     {
       "label": "Francês",
@@ -158,6 +158,10 @@
     {
       "label": "Holandês",
       "value": 2
+    },
+    {
+      "label": "nl",
+      "value": 1
     }
   ],
   "bloqueioTypes": [
