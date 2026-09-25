@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-09-18T18:13:37Z",
-  "total": 1998,
-  "negativas": 872,
-  "negativasPct": 44,
-  "umaEstrela": 781,
+  "lastUpdated": "2026-09-25T19:11:05Z",
+  "total": 2058,
+  "negativas": 889,
+  "negativasPct": 43,
+  "umaEstrela": 795,
   "umaEstrelaPct": 39,
   "produtoReprovado": 132,
   "bloqueados": 85,
-  "regularNeg": 625,
-  "reavaliaram": 52,
+  "regularNeg": 642,
+  "reavaliaram": 53,
   "subiramCinco": 6,
-  "positivas": 983,
-  "buyerNeg": 340,
-  "creatorNeg": 77,
-  "ambigNeg": 455,
-  "umaEstrelaReav": 39,
-  "topIdiomaPct": 55,
+  "positivas": 1019,
+  "buyerNeg": 345,
+  "creatorNeg": 76,
+  "ambigNeg": 468,
+  "umaEstrelaReav": 40,
+  "topIdiomaPct": 56,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
   "monthlyData": {
@@ -46,7 +46,7 @@
         94,
         74,
         66,
-        45
+        59
       ],
       "2": [
         0,
@@ -60,7 +60,7 @@
         15,
         12,
         13,
-        4
+        7
       ],
       "3": [
         0,
@@ -74,7 +74,7 @@
         18,
         35,
         16,
-        10
+        17
       ],
       "4": [
         0,
@@ -88,7 +88,7 @@
         40,
         35,
         22,
-        10
+        21
       ],
       "5": [
         10,
@@ -102,26 +102,26 @@
         180,
         169,
         109,
-        68
+        93
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 265
+      "value": 270
     },
     {
-      "label": "Suporte Hotmart",
-      "value": 89
+      "label": "Atendimento CX",
+      "value": 92
     },
     {
       "label": "Documentação",
-      "value": 85
+      "value": 89
     },
     {
       "label": "Acesso",
-      "value": 68
+      "value": 70
     },
     {
       "label": "Cobrança não reconhecida",
@@ -129,7 +129,7 @@
     },
     {
       "label": "Saques/Com.",
-      "value": 52
+      "value": 54
     },
     {
       "label": "Bloqueio",
@@ -141,7 +141,7 @@
     },
     {
       "label": "Pagamento",
-      "value": 21
+      "value": 22
     },
     {
       "label": "Conta",
@@ -151,7 +151,7 @@
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 482
+      "value": 495
     },
     {
       "label": "Inglês",
@@ -167,11 +167,11 @@
     },
     {
       "label": "Italiano",
-      "value": 51
+      "value": 53
     },
     {
       "label": "Francês",
-      "value": 32
+      "value": 34
     },
     {
       "label": "Holandês",
