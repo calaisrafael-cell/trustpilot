@@ -1,20 +1,20 @@
 {
-  "lastUpdated": "2026-09-25T19:11:05Z",
-  "total": 2058,
-  "negativas": 889,
+  "lastUpdated": "2026-10-02T19:49:57Z",
+  "total": 2097,
+  "negativas": 904,
   "negativasPct": 43,
-  "umaEstrela": 795,
-  "umaEstrelaPct": 39,
-  "produtoReprovado": 132,
-  "bloqueados": 85,
-  "regularNeg": 642,
-  "reavaliaram": 53,
+  "umaEstrela": 806,
+  "umaEstrelaPct": 38,
+  "produtoReprovado": 133,
+  "bloqueados": 88,
+  "regularNeg": 653,
+  "reavaliaram": 54,
   "subiramCinco": 6,
-  "positivas": 1019,
-  "buyerNeg": 345,
-  "creatorNeg": 76,
-  "ambigNeg": 468,
-  "umaEstrelaReav": 40,
+  "positivas": 1041,
+  "buyerNeg": 347,
+  "creatorNeg": 78,
+  "ambigNeg": 479,
+  "umaEstrelaReav": 41,
   "topIdiomaPct": 56,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
@@ -31,7 +31,8 @@
       "Jun/26",
       "Jul/26",
       "Ago/26",
-      "Set/26"
+      "Set/26",
+      "Out/26"
     ],
     "datasets": {
       "1": [
@@ -46,7 +47,8 @@
         94,
         74,
         66,
-        59
+        67,
+        3
       ],
       "2": [
         0,
@@ -60,7 +62,8 @@
         15,
         12,
         13,
-        7
+        10,
+        1
       ],
       "3": [
         0,
@@ -74,7 +77,8 @@
         18,
         35,
         16,
-        17
+        18,
+        1
       ],
       "4": [
         0,
@@ -88,7 +92,8 @@
         40,
         35,
         22,
-        21
+        22,
+        3
       ],
       "5": [
         10,
@@ -102,14 +107,15 @@
         180,
         169,
         109,
-        93
+        104,
+        7
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 270
+      "value": 272
     },
     {
       "label": "Atendimento CX",
@@ -117,11 +123,11 @@
     },
     {
       "label": "Documentação",
-      "value": 89
+      "value": 92
     },
     {
       "label": "Acesso",
-      "value": 70
+      "value": 71
     },
     {
       "label": "Cobrança não reconhecida",
@@ -129,15 +135,15 @@
     },
     {
       "label": "Saques/Com.",
-      "value": 54
+      "value": 55
     },
     {
       "label": "Bloqueio",
-      "value": 47
+      "value": 49
     },
     {
       "label": "Assinatura",
-      "value": 26
+      "value": 28
     },
     {
       "label": "Pagamento",
@@ -151,11 +157,11 @@
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 495
+      "value": 507
     },
     {
       "label": "Inglês",
-      "value": 162
+      "value": 164
     },
     {
       "label": "Alemão",
@@ -171,7 +177,7 @@
     },
     {
       "label": "Francês",
-      "value": 34
+      "value": 35
     },
     {
       "label": "Holandês",
@@ -185,7 +191,7 @@
   "bloqueioTypes": [
     {
       "label": "ToS Grave",
-      "value": 37
+      "value": 40
     },
     {
       "label": "Fraude",
