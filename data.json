@@ -1,20 +1,20 @@
 {
-  "lastUpdated": "2026-10-09T20:02:40Z",
-  "total": 2147,
-  "negativas": 921,
+  "lastUpdated": "2026-10-16T18:42:19Z",
+  "total": 2184,
+  "negativas": 933,
   "negativasPct": 43,
-  "umaEstrela": 821,
+  "umaEstrela": 831,
   "umaEstrelaPct": 38,
   "produtoReprovado": 133,
   "bloqueados": 92,
-  "regularNeg": 666,
-  "reavaliaram": 59,
+  "regularNeg": 678,
+  "reavaliaram": 60,
   "subiramCinco": 6,
-  "positivas": 1073,
-  "buyerNeg": 353,
-  "creatorNeg": 78,
-  "ambigNeg": 490,
-  "umaEstrelaReav": 45,
+  "positivas": 1094,
+  "buyerNeg": 357,
+  "creatorNeg": 79,
+  "ambigNeg": 497,
+  "umaEstrelaReav": 46,
   "topIdiomaPct": 56,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
@@ -48,7 +48,7 @@
         74,
         66,
         67,
-        18
+        28
       ],
       "2": [
         0,
@@ -63,7 +63,7 @@
         12,
         13,
         10,
-        3
+        5
       ],
       "3": [
         0,
@@ -78,7 +78,7 @@
         35,
         16,
         18,
-        2
+        6
       ],
       "4": [
         0,
@@ -93,7 +93,7 @@
         35,
         22,
         22,
-        11
+        17
       ],
       "5": [
         10,
@@ -108,18 +108,18 @@
         169,
         109,
         104,
-        31
+        46
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 278
+      "value": 282
     },
     {
       "label": "Documentação",
-      "value": 94
+      "value": 95
     },
     {
       "label": "Atendimento CX",
@@ -127,7 +127,7 @@
     },
     {
       "label": "Acesso",
-      "value": 72
+      "value": 75
     },
     {
       "label": "Cobrança não reconhecida",
@@ -135,7 +135,7 @@
     },
     {
       "label": "Saques/Com.",
-      "value": 55
+      "value": 56
     },
     {
       "label": "Bloqueio",
@@ -146,22 +146,22 @@
       "value": 28
     },
     {
-      "label": "Pagamento",
+      "label": "Conta",
       "value": 22
     },
     {
-      "label": "Conta",
-      "value": 20
+      "label": "Pagamento",
+      "value": 22
     }
   ],
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 519
+      "value": 525
     },
     {
       "label": "Inglês",
-      "value": 166
+      "value": 167
     },
     {
       "label": "Alemão",
@@ -169,7 +169,7 @@
     },
     {
       "label": "Italiano",
-      "value": 56
+      "value": 59
     },
     {
       "label": "Português",
@@ -177,7 +177,7 @@
     },
     {
       "label": "Francês",
-      "value": 35
+      "value": 37
     },
     {
       "label": "Holandês",
