@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-10-30T19:53:02Z",
-  "total": 2242,
-  "negativas": 952,
-  "negativasPct": 42,
-  "umaEstrela": 848,
+  "lastUpdated": "2026-11-06T20:46:12Z",
+  "total": 2272,
+  "negativas": 968,
+  "negativasPct": 43,
+  "umaEstrela": 862,
   "umaEstrelaPct": 38,
-  "produtoReprovado": 134,
-  "bloqueados": 92,
-  "regularNeg": 697,
-  "reavaliaram": 60,
+  "produtoReprovado": 137,
+  "bloqueados": 95,
+  "regularNeg": 710,
+  "reavaliaram": 64,
   "subiramCinco": 6,
-  "positivas": 1126,
-  "buyerNeg": 362,
-  "creatorNeg": 80,
-  "ambigNeg": 510,
-  "umaEstrelaReav": 46,
-  "topIdiomaPct": 57,
+  "positivas": 1140,
+  "buyerNeg": 366,
+  "creatorNeg": 81,
+  "ambigNeg": 521,
+  "umaEstrelaReav": 50,
+  "topIdiomaPct": 56,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
   "monthlyData": {
@@ -32,7 +32,8 @@
       "Jul/26",
       "Ago/26",
       "Set/26",
-      "Out/26"
+      "Out/26",
+      "Nov/26"
     ],
     "datasets": {
       "1": [
@@ -48,7 +49,8 @@
         74,
         66,
         67,
-        45
+        46,
+        13
       ],
       "2": [
         0,
@@ -63,7 +65,8 @@
         12,
         13,
         10,
-        7
+        7,
+        2
       ],
       "3": [
         0,
@@ -78,7 +81,8 @@
         35,
         16,
         18,
-        13
+        13,
+        0
       ],
       "4": [
         0,
@@ -93,7 +97,8 @@
         35,
         22,
         22,
-        22
+        22,
+        2
       ],
       "5": [
         10,
@@ -108,18 +113,19 @@
         169,
         109,
         104,
-        73
+        77,
+        8
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 287
+      "value": 291
     },
     {
       "label": "Documentação",
-      "value": 100
+      "value": 102
     },
     {
       "label": "Atendimento CX",
@@ -127,7 +133,7 @@
     },
     {
       "label": "Acesso",
-      "value": 76
+      "value": 78
     },
     {
       "label": "Cobrança não reconhecida",
@@ -135,11 +141,11 @@
     },
     {
       "label": "Saques/Com.",
-      "value": 57
+      "value": 58
     },
     {
       "label": "Bloqueio",
-      "value": 54
+      "value": 57
     },
     {
       "label": "Assinatura",
@@ -157,19 +163,19 @@
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 538
+      "value": 546
     },
     {
       "label": "Inglês",
-      "value": 169
+      "value": 173
     },
     {
       "label": "Alemão",
-      "value": 83
+      "value": 85
     },
     {
       "label": "Italiano",
-      "value": 60
+      "value": 62
     },
     {
       "label": "Português",
@@ -195,7 +201,7 @@
     },
     {
       "label": "Fraude",
-      "value": 30
+      "value": 33
     },
     {
       "label": "Chargeback",
