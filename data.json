@@ -1,20 +1,20 @@
 {
-  "lastUpdated": "2026-11-06T20:46:12Z",
-  "total": 2272,
-  "negativas": 968,
+  "lastUpdated": "2026-11-13T21:19:24Z",
+  "total": 2318,
+  "negativas": 993,
   "negativasPct": 43,
-  "umaEstrela": 862,
+  "umaEstrela": 884,
   "umaEstrelaPct": 38,
-  "produtoReprovado": 137,
-  "bloqueados": 95,
-  "regularNeg": 710,
-  "reavaliaram": 64,
+  "produtoReprovado": 139,
+  "bloqueados": 97,
+  "regularNeg": 731,
+  "reavaliaram": 65,
   "subiramCinco": 6,
-  "positivas": 1140,
-  "buyerNeg": 366,
-  "creatorNeg": 81,
-  "ambigNeg": 521,
-  "umaEstrelaReav": 50,
+  "positivas": 1156,
+  "buyerNeg": 374,
+  "creatorNeg": 83,
+  "ambigNeg": 536,
+  "umaEstrelaReav": 51,
   "topIdiomaPct": 56,
   "topIdiomaNome": "Espanhol",
   "cobrancaCount": 58,
@@ -50,7 +50,7 @@
         66,
         67,
         46,
-        13
+        35
       ],
       "2": [
         0,
@@ -66,7 +66,7 @@
         13,
         10,
         7,
-        2
+        5
       ],
       "3": [
         0,
@@ -82,7 +82,7 @@
         16,
         18,
         13,
-        0
+        5
       ],
       "4": [
         0,
@@ -98,7 +98,7 @@
         22,
         22,
         22,
-        2
+        6
       ],
       "5": [
         10,
@@ -114,14 +114,14 @@
         109,
         104,
         77,
-        8
+        20
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 291
+      "value": 298
     },
     {
       "label": "Documentação",
@@ -129,53 +129,53 @@
     },
     {
       "label": "Atendimento CX",
-      "value": 92
+      "value": 93
     },
     {
       "label": "Acesso",
-      "value": 78
+      "value": 80
+    },
+    {
+      "label": "Saques/Com.",
+      "value": 60
+    },
+    {
+      "label": "Bloqueio",
+      "value": 59
     },
     {
       "label": "Cobrança não reconhecida",
       "value": 58
     },
     {
-      "label": "Saques/Com.",
-      "value": 58
-    },
-    {
-      "label": "Bloqueio",
-      "value": 57
-    },
-    {
       "label": "Assinatura",
-      "value": 28
+      "value": 30
     },
     {
       "label": "Conta",
-      "value": 25
+      "value": 27
     },
     {
       "label": "Pagamento",
-      "value": 23
+      "value": 24
     }
   ],
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 546
+      "value": 560
     },
     {
       "label": "Inglês",
-      "value": 173
+      "value": 177
     },
     {
       "label": "Alemão",
-      "value": 85
+      "value": 89
     },
     {
       "label": "Italiano",
-      "value": 62
+      "value": 63
     },
     {
       "label": "Português",
@@ -183,7 +183,7 @@
     },
     {
       "label": "Francês",
-      "value": 39
+      "value": 41
     },
     {
       "label": "Holandês",
@@ -201,7 +201,7 @@
     },
     {
       "label": "Fraude",
-      "value": 33
+      "value": 34
     },
     {
       "label": "Chargeback",
@@ -225,6 +225,10 @@
     },
     {
       "label": "Link Desativado",
+      "value": 1
+    },
+    {
+      "label": "Saque Bloqueado",
       "value": 1
     }
   ]
