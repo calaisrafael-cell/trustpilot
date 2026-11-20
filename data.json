@@ -1,19 +1,19 @@
 {
-  "lastUpdated": "2026-11-13T21:19:24Z",
-  "total": 2318,
-  "negativas": 993,
+  "lastUpdated": "2026-11-20T22:10:55Z",
+  "total": 2343,
+  "negativas": 1003,
   "negativasPct": 43,
-  "umaEstrela": 884,
+  "umaEstrela": 894,
   "umaEstrelaPct": 38,
   "produtoReprovado": 139,
   "bloqueados": 97,
-  "regularNeg": 731,
+  "regularNeg": 741,
   "reavaliaram": 65,
   "subiramCinco": 6,
-  "positivas": 1156,
-  "buyerNeg": 374,
-  "creatorNeg": 83,
-  "ambigNeg": 536,
+  "positivas": 1170,
+  "buyerNeg": 377,
+  "creatorNeg": 84,
+  "ambigNeg": 542,
   "umaEstrelaReav": 51,
   "topIdiomaPct": 56,
   "topIdiomaNome": "Espanhol",
@@ -50,7 +50,7 @@
         66,
         67,
         46,
-        35
+        45
       ],
       "2": [
         0,
@@ -82,7 +82,7 @@
         16,
         18,
         13,
-        5
+        6
       ],
       "4": [
         0,
@@ -98,7 +98,7 @@
         22,
         22,
         22,
-        6
+        8
       ],
       "5": [
         10,
@@ -114,22 +114,22 @@
         109,
         104,
         77,
-        20
+        32
       ]
     }
   },
   "motivos": [
     {
       "label": "Reembolso",
-      "value": 298
+      "value": 301
     },
     {
       "label": "Documentação",
-      "value": 102
+      "value": 104
     },
     {
       "label": "Atendimento CX",
-      "value": 93
+      "value": 94
     },
     {
       "label": "Acesso",
@@ -137,7 +137,7 @@
     },
     {
       "label": "Saques/Com.",
-      "value": 60
+      "value": 61
     },
     {
       "label": "Bloqueio",
@@ -163,11 +163,11 @@
   "idiomas": [
     {
       "label": "Espanhol",
-      "value": 560
+      "value": 565
     },
     {
       "label": "Inglês",
-      "value": 177
+      "value": 179
     },
     {
       "label": "Alemão",
@@ -179,11 +179,11 @@
     },
     {
       "label": "Português",
-      "value": 55
+      "value": 56
     },
     {
       "label": "Francês",
-      "value": 41
+      "value": 42
     },
     {
       "label": "Holandês",
@@ -192,6 +192,10 @@
     {
       "label": "Dinamarquês",
       "value": 4
+    },
+    {
+      "label": "Arabe",
+      "value": 1
     }
   ],
   "bloqueioTypes": [
